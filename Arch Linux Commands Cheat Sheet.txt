@@ -1,0 +1,631 @@
+**Arch Linux Commands Cheat Sheet**
+
+General
+
+#See your Operating System.
+• cat /etc/os-release
+#Show UEFI or BIOS.
+• ls /sys/firmware/efi
+Note: If nothing appears, then your system has a BIOS.
+#Change hostname.
+• echo ["NEW HOSTNAME"] > /etc/hostname
+• sudo nano /etc/hosts
+Note: Change it here as well to prevent DNS resolution errors.
+• hostnamectl status
+#See uses for commands and options.
+• man [COMMAND]
+Note: Press q to quit.
+#Turn computer off.
+• sudo poweroff.
+#Reboot computer.
+• sudo reboot
+#Show currently logged in user.
+• whoami
+#Show all user activity on system.
+• w
+#Display how long machine has been running.
+• uptime
+#Change shell.
+• chsh -s [SHELL NAME]
+#Find the location of a package or binary.
+• which [PACKAGE OR BINARY]
+#Show all environment variables.
+• env
+#Add variable to PATH.
+• export [IDENTIFIER]=[VALUE]
+#Mount a filesystem to a specified mount point, an important operation for managing disks and partitions.
+• mount [DEVICE] [/mnt/MOUNTPOINT]
+Note: If no mount point exists create one with mkdir, in the /mnt dir.
+#Update package checksums.
+• updpkgsums
+• makepkg -si
+
+Time Synchronization
+
+#Enable NTP.
+• timedatectl set-ntp true.
+#Verify change.
+• timedatectl status
+#Restart service.
+• sudo systemctl restart systemd-timesyncd
+
+Navigation
+
+#Print working directory.
+• pwd
+#Change directory.
+• cd [DIRECTORY]
+#Go back to previous directory.
+• cd .
+#Navigate back 2 directories.
+• cd ..
+
+Searching
+
+#List hidden/visible files and directories, with info.
+• ls -lah
+#Display how many items are in a directory.
+• ls -la | wc -l
+#Filter output of any command.
+• [COMMAND] | grep ["KEYWORD"]
+#Find any file, binary, package etc.
+• sudo find / -name [FILENAME]
+Note: You may also search for a specific package or binary with: sudo find / | grep ["BINARY OR PACKAGE"]
+#Find all files with a specific extension.
+• ls -lah | grep ["*.EXTENSION"]
+#Search for specific environment variables.
+• env | grep ["VARIABLE 1" "VARIABLE 2" "VARIABLE 3"]
+#Find a specific directory.
+• find -type d -name [DIRECTORY NAME]
+#Find a specific file.
+• find -type f -name [FILENAME]
+#Find the path of a binary or package.
+• which [BINARY OR PACKAGE]
+
+File/directory creation, viewing, editing, moving, copying, renaming, and deletion.
+
+#Create a file.
+• touch [FILENAME AND EXTENSION]
+#Redirect output of a command to a file.
+• [COMMAND 1] [COMMAND 2] > [FILENAME AND EXTENSION]
+#View contents of a file.
+• cat [FILENAME]
+#Edit a file.
+• cat > [FILENAME]
+Note: Enter text, then hit CTRL + C to save.
+#Move a file.
+• sudo mv [FILENAME] [EXACT PATH]
+#Copy a file to a location.
+• cp [FILENAME] [EXACT PATH]
+Note: To copy to the same directory, exclude a path.
+#Rename a file.
+• sudo mv [FILENAME] [NEW FILENAME]
+#Delete a file.
+• rm [FILE1] [FILE2] [FILE3]
+#Create a directory.
+• mkdir [DIRECTORY NAME]
+#Move a directory.
+• sudo mv -R [DIRECTORY] [NEW DIRECTORY]
+# Delete a directory.
+• rm -r [DIRECTORY]
+
+Error Handling
+
+#Check the exit status of a command.
+• [COMMAND] $?
+#Do not show errors in the output.
+• [COMMAND] 2 /dev/null
+
+Nano Text Editor
+
+#Install nano.
+• sudo pacman -S nano
+#Create a file with nano.
+• nano [FILENAME AND EXTENSION]
+#Save file.
+• CTRL + X
+• y + ENTER
+#Edit a file.
+• nano [FILENAME]
+Notes: More keybinds are displayed, within the editor.
+
+Aliases
+
+#Create an alias.
+• alias [NAME]=['COMMAND 1'] ['COMMAND 2'] ['COMMAND 3']
+#Delete an alias.
+• unalias [ALIAS]
+
+Permission Management
+
+#Change permissions.
+• sudo chmod +[r, or w, or x, or rw, or rwx]
+#Change permissions (octal notation).
+• sudo chmod [NUMBERS]
+#Change permissions for user only.
+• sudo chmod u+[PERMISSIONS]
+#Change permissions for group.
+• sudo chmod g+[PERMISSIONS]
+#Change permissions for a directory and sub-directories.
+• sudo chmod -R [PERMISSIONS]
+
+Changing ownership of files/directories.
+
+#Change owner of a file.
+• sudo chown [OWNER] [FILENAME]
+#Change the owner of a directory and it's sub-directories.
+• sudo chown -R [OWNER] [DIRECTORY]
+Note: You can change the owner and group together with: sudo chown [OWNER]:[GROUP] [NAME]
+
+
+Networking
+
+#View networking drivers.
+• /sbin/lscpi | grep -i network
+#Show modules for networking interfaces.
+• /sbin/lspci -k | grep -A 3 -i network
+#Show IP address.
+• ip addr
+#Show networking interfaces.
+• iwconfig
+#Show sockets.
+• netstat -tulpn
+#Show listening sockets.
+• ss -l
+#Show sockets listening/non-listening.
+• ss -a
+#Show kernels network routing info.
+• ss -r
+#Show established TCP connections.
+• ss -t
+#Show established UDP connections.
+• ss -u
+#Show IpV4 connections.
+• ss -4
+#Show IpV6 connections.
+• ss -6
+
+VPNs
+
+#Verify interface isn't blocked.
+• rfkill list
+#Install packages.
+• sudo pacman -S networkmanager-openvpn networkmanager-wireguard
+#Import config file for OpenVPN.
+• nmcli connection import type openvpn file [CONFIG FILE].ovpn
+#Import config file for WireGuard.
+• nmcli connection import type wireguard file [CONFIG FILE].conf
+# Activate VPN.
+• nmcli connection up id [CONFIG FILE].
+#Disable VPN.
+• nmcli connection down [CONFIG FILE].
+#View logs.
+• journalctl -u NetworkManager
+#Test DNS.
+• resolvectl status
+
+Hashing
+
+#Show has of a file or binary.
+• sha256sum [FILENAME/BINARY]
+#Verify the hash of a package or binary.
+• gpg --keyserver-options auto-key-retrieve --verify [FILENAME/BINARY]
+
+Filesystems
+
+#List all storage devices.
+• lsblk
+
+Package Management:
+
+#Full system update.
+• sudo pacman -Syu
+#Install packages without confirmation.
+• sudo pacman -[OPTIONS] --noconfirm
+#Download, but not install packages for full system update. 
+• sudo pacman -Syuw
+#Synchronize package database, with verbose output.
+sudo pacman -Syyvv
+#Install packages.
+• sudo pacman -S
+#Search for packages.
+• sudo pacman -Ss [KEYWORD OR STRING]
+#Remove a package, dependancies, and orphans.
+• sudo pacman -Rns [PACKAGE]
+#Check for orphaned packages.
+• sudo pacman -Qtd
+#Display all installed packages.
+• sudo pacman -Qq
+#Remove old versions of packages.
+• sudo pacman -Sc
+#Remove every version of packages, except the latest.
+• sudo paccache -r
+#Update pacman keyring, to prevent issues with verification of signatures, which hinder installations.
+• sudo pacman --init
+• sudo pacman --populate archlinux
+#Rebuild a broken package.
+• sudo pacman -U [PACKAGE] [EXTENSION]
+#Verify file ownership.
+• sudo pacman -Qo /usr/bin/[FILENAME]
+#Find dependancies for packages.
+• sudo pactree -r [PACKAGE]
+#Update keyring.
+• sudo pacman-key --refresh-keys
+#Repair package database.
+• sudo pacman -D --asdeps $(pacman -Qdtq)
+• sudo pacman -D --asexplicit package-name
+• sudo pacman -Syyu
+
+Yet Another Yogurt (Yay)
+#Install yay.
+• sudo pacman -S --needed base-devel git
+• git clone https://www.aur.archlinux.org/yay.git
+• cd yay
+• makepkg -si
+#Install programs with yay.
+• yay -S [PACKAGE]
+Notes: When prompted to clean build, answer y, when prompted to show diffs, answer n. When prompted to install the program, answer y.
+#Remove package, dependancies, and oprhans for a package with yay.
+• yay -Rns
+# Rebuild a package.
+• yay --rebuild [PACKAGE]
+
+GPG
+
+#Import required key for package.
+• gpg --recv-keys [KEYID]
+
+Systemd
+
+#Enable a service on startup.
+• sudo systemctl enable --now [UNIT]
+#Start a service.
+• sudo systemctl start [SERVICE]
+#View status of a service.
+• sudo systemctl status [SERVICE]
+#Restart a service.
+• sudo systemctl restart [SERVICE]
+#Stop a service.
+• sudo systemctl stop [SERVICE]
+#Create unit file.
+• sudo nano /etc/systemd/system/[FILENAME].service
+• sudo systemctl daemon-reexec
+• sudo systemctl enable --now [FILENAME].service
+#Check default target.
+• sudo systemctl get-default
+Notes: Available targets are:
+• graphical.target ()
+• multi-user.target ()
+• rescue.target ()
+• emergency.target ()
+#Change default target PERMANENTLY.
+• sudo systemctl set-default [TARGETNAME].target
+#Boot into rescue mode.
+• sudo isolate rescue.target
+
+Timers
+
+#Create a timer unit.
+• sudo nano /etc/systemd/system/[FILENAME].timer
+• sudo systemctl enable --now [FILENAME].timer
+
+Viewing Logs
+
+#View bash history.
+• history
+#Clear session history.
+• history -c
+#Remove bash history.
+• unset $HISTORY
+#View last 50 entries for syslog.
+• tail -n 50 /var/log/syslog
+#View service log.
+• cat [EXACT PATH OF SERVICE]/error.log
+#View last 50 kernel errors.
+• dmesg | tail -n 50
+#Show last 50 errors for unit with journald.
+• sudo journalctl -u [UNIT] | tail -n 50
+#Follow entries for a unit with journald.
+• sudo journalctl -f -u [UNIT]
+#View last 50 SSH logins.
+• sudo tail -n 50 /var/log/auth.log
+
+User and Group Management
+
+#View users.
+• compgen -u
+#View groups.
+• groups
+#Add a user.
+• sudo useradd [USERNAME]
+Notes: Usernames can only be lowercase. You must enter a password for the user.
+#Create a group.
+sudo groupadd [GROUPNAME]
+#Add a user to a group.
+• sudo usermod -aG [GROUPNAME]
+#Switch user.
+• su - [USERNAME]
+Note: to login to the root account just enter: su -
+#Logout
+• logout
+#Delete a user.
+• sudo userdel [USERNAME]
+Note: to remove the users home directory as well enter: userdel -r [USERNAME]
+#Delete a group.
+• sudo groupdel [GROUP NAME] 
+#Remove a user from a group.
+• sudo gpasswd -d [USERNAME] [GROUP NAME]
+#View all system groups and users.
+• cat /etc/passwd
+#View users passwords hashes.
+• cat /etc/shadow
+
+Update Mirror List
+
+#Edit config file.
+• sudo nano /etc/pacman.d/mirrorlist
+
+Update Mirror List (with Reflector)
+
+#Install utility.
+• sudo pacman -S reflector
+#Update mirrors.
+• sudo reflector --country ["COUNTRY"] --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+
+SSH
+
+#Install SSH.
+• sudo pacman -S openssh
+#Edit SSH config file.
+• sudo nano /etc/ssh/sshd_config
+Tips: Change port to a number in the thousands. Change PermitRootLogin to "no". Change MaxAuthTries to "3". Change MaxSessions to "1". Change PasswordAuthentication to "no". Generate encryption keys with: ssh-keygen -t ed25519.
+#Enable SSH on startup.
+• sudo systemctl enable --now sshd
+#Start SSH service.
+• sudo systemctl start sshd
+#Restart SSH.
+• sudo systemctl restart sshd
+#Log into system.
+• ssh [USERNAME]@[IP ADDRESS]
+Note: Enter root as the user for unrestricted access.
+#Logout of system.
+• Logout
+
+IWD/IWCTL:
+
+#List interfaces.
+• device-list
+#Display visible SSIDs (network connections, access points).
+• station [INTERFACE] get-networks
+#Connect to an SSID (network connection, access point).
+• station [INTERFACE] connect ["SSID"]
+Note: if the SSID has spaces in it, you will need to wrap it in double quotation marks.
+#Exit the program.
+• exit
+#Test to verify you're connected to the internet.
+• ping -c 3 www.google.com
+
+Network Manager (nmcli)
+
+#Download the utility.
+• sudo pacman -s nmcli
+#Enable on startup.
+• sudo systemctl enable --now NetworkManager
+#Start the service.
+• sudo systemctl start NetworkManager
+#Check if service is active.
+• sudo systemctl status NetworkManager
+#Enable scanning with interface.
+• nmcli radio wifi on
+#View all network connections.
+• nmcli dev wifi list.
+#Connect to an SSID (network connection, access point).
+• nmcli dev wifi connect ["SSID"] password ["PASSWORD"]
+
+Kernel Commands
+
+#Show the status of loadable kernel modules, essential for seeing what drivers and features are currently active.
+• lsmod | grep ["MODULE"]
+#Adds kernel modules, allowing you to manually load necessary drivers or services.
+• sudo modprobe [MODULE]
+#Remove kernel module.
+• sudo modprobe -r [MODULE]
+#View all kernel parameters.
+• sysctl -a
+#Set a temporary parameter.
+• sysctl [-w] [variable]=[value]
+#Configure kernel parameters at runtime. This is key for modifying network settings, memory management, and other low-level system behaviors.
+• sysctl [VARIABLE] sysctl kernel.[HOSTNAME]
+#Load all system files.
+• sysctl --system
+#Displays detailed information about the CPU as reported by the kernel.
+• cat /proc/cpuinfo / lscpu
+#Display detailed information on system memory usage (RAM and swap space).
+• cat /proc/meminfo / free
+#Executes a command repeatedly at specified intervals, useful for monitoring real-time system changes.
+• watch [OPTIONS] [COMMAND]
+
+rsync
+
+#Install rsync.
+• sudo pacman -S rsync
+#Copy files to your machine.
+• rsync -v [FILENAME 1] [FILENAME 2] [FILENAME 3] [YOUR USERNAME]@[YOUR IP ADDRESS]:[YOUR DIRECTORY]
+#Copy an entire directory with to your machine.
+• rsync -rv [DIRECTORY] [YOUR USERNAME]@[YOUR IP ADDRESS]:[YOUR DIRECTORY]
+Notes: If the host machine is running on a specific port, you must include the port like so: rsync -P [FILENAME] [YOUR USERNAME]@[YOUR IP ADDRESS]:[YOUR DIRECTORY]. You may also improve download speed, by compressing files with the -C option.
+
+Enable Secure Boot
+
+#Download utility.
+• sudo pacman -S sbctl
+#Generate keys.
+• sudo sbctl enroll-keys
+#Sign kernel.
+• sudo sbctl sign-kernel /boot/vmlinuz-linux
+#Sign EFI.
+• sudo sbctl sign-efi /boot/EFI/BOOT/BOOTX64.EFI
+
+Miscellaneous
+
+#Install C development environment.
+• sudo pacman -S base-devel gcc gdb make
+#Default PS1 Variable.
+• PS1='[\u@\h \W]\$ '
+
+Wildcards Reference
+
+#All matches.
+• *
+#Matches a single character.
+• ?
+#Matches specified characters.
+• []
+#Matches file sub-directories recursively.
+• **
+
+Permissions Reference (Octal Notation and Flags)
+
+Flags:
+
+• -r (Read)
+• -w (Write)
+• -x (Execute)
+
+Octal Notation:
+
+• 0	(No permissions).
+• 1	(Execute only).
+• 2	(Write only).
+• 3	(Write and execute).
+• 4	(Read only).
+• 5	(Read and execute).
+• 6	(Read and write).
+• 7	Read, write, and execute (full access).
+
+Error Codes Reference
+
+1: EPERM - Operation not permitted. The process tried to perform an action without the necessary permissions (e.g., a non-root user trying to access a restricted file).
+2: ENOENT - No such file or directory. The specified file or directory path does not exist.
+3: ESRCH - No such process. The specified process ID (PID) does not exist.
+4: EINTR - Interrupted system call. A system call was interrupted by a signal before it could complete.
+5: EIO - I/O error. A physical input/output error occurred while communicating with a hardware device.
+6: ENXIO - No such device or address. The device specified does not exist or the address is invalid.
+11: EAGAIN (or EWOULDBLOCK) - Resource temporarily unavailable. The operation would block, and the resource is temporarily unavailable.
+12: ENOMEM - Out of memory. The system could not allocate enough memory to complete the operation.
+13: EACCES - Permission denied. Similar to EPERM, usually indicating a file access permission issue.
+14: EFAULT - Bad address. The program provided an invalid memory address pointer.
+16: EBUSY - Device or resource busy. An attempt was made to open a device or resource that was already in use.
+17: EEXIST - File exists. An attempt was made to create a file that already exists.
+22: EINVAL - Invalid argument. An invalid argument was passed to a system call or function.
+28: ENOSPC - No space left on device. The disk partition is full.
+30: EROFS - Read-only file system. An attempt was made to write to a file system that is mounted read-only.
+
+Keybinds Reference
+
+• Navigation: 
+
+• Move with Ctrl+A/E (line start/end).
+• Ctrl+F/B (forward/back char).
+• Alt+F/B (forward/back word).
+
+Editing:
+
+• Ctrl+D (delete character).
+• Ctrl+W/Alt+D (delete word). 
+• Ctrl+U/K (cut line).
+• Ctrl+Y (paste).
+• Ctrl+_ (undo).
+
+History/Completion: 
+
+• Use Ctrl+R for reverse search.
+• Tab for autocomplete.
+• Alt+. for the last argument.
+
+Control: 
+
+• Ctrl+C terminates a process.
+• Ctrl+Z suspends a process.
+• Ctrl+L clears the screen.
+
+Important Paths
+
+General System:
+
+#System binaries.
+• /sbin/
+• /usr/sbin
+#Root directory.
+• /root/
+#Temporary files.
+• /tmp/ and /var/tmp/
+
+Bash:
+
+#Bash configuration file.
+• /home/[USERNAME]/bash.rc
+#Bash history file.
+• /home/[USERNAME]/.bash_history
+#Configuration Directory
+/etc/
+
+Storage:
+
+#Disks and partitions.
+• /etc/fstab
+
+
+User and Group Management:
+
+#View users and Groups
+• /etc/passwd
+#Password Hashes
+• /etc/shadow
+#Users with root permissions.
+• /etc/sudoers
+
+Logs:
+
+#System and application logs.
+• /var/log/
+#General system activity.
+• /var/log/syslog
+• /var/log/messages
+#Security events.
+• /var/log/secure
+• /var/log/auth.log
+#Kernel errors.
+• /var/log/kern.log
+#Cron jobs.
+• /var/log/cron
+#Boot process messages.
+• /var/log/boot.log
+#System resources.
+• /proc/
+
+Networking:
+
+#Networking info.
+• /proc/net/
+#Device/hardware info.
+• /sys/
+#Static mapping of hostnames to IP addresses.
+• /etc/hosts
+#DNS configuration.
+• /etc/resolv.conf
+
+Systemd:
+
+#Systemd services.
+• /etc/services
+
+Kernel:
+
+#Kernel parameters at runtime.
+• /etc/sysctl.conf
+
+SSH Service:
+
+#SSH Configuration
+• /etc/ssh/sshd_config
