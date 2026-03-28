@@ -1,0 +1,27 @@
+𝗜𝗻𝘁𝗿𝗼𝗱𝘂𝗰𝘁𝗶𝗼𝗻
+
+Ricing is the act of customizing an Arch Linux distro, making it one of a kind. The term was coined by the car community. Follow this guide to customize yours after installing Arch Linux.
+
+𝗖𝗵𝗼𝗼𝘀𝗲 𝗮 𝗧𝗶𝗹𝗶𝗻𝗴 𝗪𝗶𝗻𝗱𝗼𝘄 𝗠𝗮𝗻𝗮𝗴𝗲𝗿
+
+Ricing typically starts with a tiling window manager (WM) like i3, dwm, or xmonad. These WMs focus on keyboard-centric navigation and offer flexibility in customizing your workspace.
+
+𝗦𝗲𝗹𝗲𝗰𝘁 𝗮 𝗗𝗲𝘀𝗸𝘁𝗼𝗽 𝗘𝗻𝘃𝗶𝗿𝗼𝗻𝗺𝗲𝗻𝘁
+
+While some Linux distributions come with a pre-configured desktop environment (DE), you can also choose a lightweight DE like XFCE, LXDE, or Openbox. These DEs provide a solid foundation for customization.
+
+𝗖𝘂𝘀𝘁𝗼𝗺𝗶𝘇𝗲 𝗜𝗰𝗼𝗻𝘀 𝗮𝗻𝗱 𝗧𝗵𝗲𝗺𝗲𝘀
+
+Replace default icons with custom ones, and choose a theme that suits your taste. You can use icon packs like Papirus, Numix, or Breeze, and themes like Arc, Flat Remix, or Material.
+
+𝗖𝗼𝗻𝗳𝗶𝗴𝘂𝗿𝗲 𝗣𝗮𝗻𝗲𝗹𝘀 𝗮𝗻𝗱 𝗦𝘆𝘀𝘁𝗲𝗺 𝗜𝗻𝘁𝗲𝗿𝗳𝗮𝗰𝗲𝘀
+
+Customize your panel (taskbar) by adding or removing widgets, changing its appearance, and adjusting its position. You can also modify system interfaces like the login screen, lock screen, and application launchers.
+
+𝗣𝗲𝗿𝘀𝗼𝗻𝗮𝗹𝗶𝘇𝗲 𝗬𝗼𝘂𝗿 𝗧𝗲𝗿𝗺𝗶𝗻𝗮𝗹
+
+Choose a terminal emulator like Urxvt, Rxvt-unicode, Kitty, or Tillix and customize its appearance using configuration files or themes.
+
+𝗘𝘅𝗽𝗲𝗿𝗶𝗺𝗲𝗻𝘁 𝗮𝗻𝗱 𝗥𝗲𝗳𝗶𝗻𝗲
+
+Try different combinations of components, and refine your setup based on your preferences. Don’t be afraid to experiment and undo changes as needed.
